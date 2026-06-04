@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+
+<style>
+:root {
+  --bg: radial-gradient(circle at top, #1f2937, #0b1220);
+  --panel: #0f172a;
+  --card: #1f2937;
+  --text: #ffffff;
+  --muted: #9ca3af;
+
+  --input: #111827;
+  --border: #374151;
+}
+
+body.light {
+  --bg: #f3f4f6;
+  --panel: #ffffff;
+  --card: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+
+  --input: #ffffff;
+  --border: #d1d5db;
+}
+
+/* ===== BASE ===== */
+body {
+  font-family: Arial;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== APP ===== */
+.app {
+  width: 420px;
+  margin-top: 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+#onlineBox {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===== STATUS ===== */
+#status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--card);
+  margin-bottom: 8px;
+  transition: 0.2s;
+  color: var(--text);
+}
+
+/* ===== CHAT ===== */
+#chat {
+  height: 360px;
+  overflow-y: auto;
+  background: var(--panel);
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+/* ===== MSG ===== */
+.msg {
+  max-width: 75%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  margin: 6px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.me {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.other {
+  background: var(--card);
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+/* ===== INPUTS ===== */
+button, input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: none;
+}
+
+input {
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* ===== BUTTON ===== */
+button {
+  background: var(--card);
+  color: var(--text);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+/* ===== LOADER ===== */
+.loader {
+  display: none;
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--border);
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== TYPING ===== */
+#typingBar {
+  font-size: 12px;
+  color: var(--muted);
+  height: 16px;
+  margin-top: 6px;
+}
+
+/* ===== GIF / PANEL ===== */
+#panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+  gap: 5px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.gif {
+  width: 100%;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.gif:hover {
+  transform: scale(1.05);
+}
+body {
+  font-family: Arial;
+  background: radial-gradient(circle at top, #1f2937, #0b1220);
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.app {
+  width: 420px;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+#onlineBox {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+#status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #374151;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+#chat {
+  height: 360px;
+  overflow-y: auto;
+  background: #0f172a;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid #1f2937;
+}
+
+.msg {
+  max-width: 75%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.me {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.other {
+  background: #1f2937;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+button, input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: none;
+}
+
+input {
+  background: #111827;
+  color: white;
+  border: 1px solid #374151;
+}
+
+button {
+  background: #1f2937;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+.loader {
+  display: none;
+  width: 26px;
+  height: 26px;
+  border: 3px solid #374151;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+#typingBar {
+  font-size: 12px;
+  color: #9ca3af;
+  height: 16px;
+  margin-top: 6px;
+}
+#panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+  gap: 5px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.gif {
+  width: 100%;
+  height: 50px;
+  object-fit: cover;
+}
+
+.gif:hover {
+
+  transform: scale(1.05);
+}</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+  <div class="title">💬 Random Chat</div>
+  <div id="onlineBox">🟢 0 online</div>
+</div>
+
+<div id="status">Gotowy</div>
+
+
+<select id="gender">
+  <option value="">Płeć</option>
+  <option value="male">Mężczyzna</option>
+  <option value="female">Kobieta</option>
+</select>
+
+<select id="seeking">
+  <option value="">Szukam</option>
+  <option value="male">Mężczyzna</option>
+  <option value="female">Kobieta</option>
+  <option value="random">Losowo</option>
+</select>
+
+<button id="findBtn" onclick="find()">🔍 Szukaj</button>
+<button onclick="disconnectChat()">🔴 Rozłącz</button>
+<button onclick="skipUser()">⏭ Skip</button>
+
+<div class="loader" id="loader"></div>
+
+<div id="chat"></div>
+
+<div id="typingBar"></div>
+
+
+<div id="panel"></div>
+<!-- 🔥 PANEL (EMOJI + GIF) -->
+<div id="panel"></div>
+
+<input id="msg" placeholder="Wiadomość" disabled>
+
+<div style="display:flex; gap:6px; margin-top:6px;">
+  <button style="width:50%" onclick="toggleEmoji()">😄 Emoji</button>
+  <button style="width:50%" onclick="toggleGIF()">🎬 GIF</button>
+</div>
+
+<input id="gifSearch" placeholder="Szukaj GIF..." oninput="searchGIF()" style="display:none;">
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+
+const msg = document.getElementById("msg");
+const chat = document.getElementById("chat");
+const loader = document.getElementById("loader");
+const status = document.getElementById("status");
+const typingBar = document.getElementById("typingBar");
+const onlineBox = document.getElementById("onlineBox");
+const findBtn = document.getElementById("findBtn");
+const panel = document.getElementById("panel");
+const gifSearch = document.getElementById("gifSearch");
+
+const GIPHY_KEY = "5sqq10LA6rE3Cj3Ig3xcBrPE497qJtOM";
+
+/* 🎧 DŹWIĘKI */
+const soundMsg = new Audio("/sounds/msg.mp3");
+const soundMatch = new Audio("/sounds/match.mp3");
+
+let audioUnlocked = false;
+let inMatch = false;
+let lockedAfterLeave = false;
+
+/* 🔓 AUDIO FIX */
+function unlockAudio() {
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+
+  soundMsg.play().catch(()=>{});
+  soundMsg.pause();
+  soundMatch.play().catch(()=>{});
+  soundMatch.pause();
+}
+
+document.body.addEventListener("click", unlockAudio, { once: true });
+
+/* 🟢 ONLINE */
+socket.on("online", (count) => {
+  onlineBox.innerText = "🟢 " + count + " online";
+});
+
+/* 🔒 BUTTON LOCK */
+function updateButtons() {
+  findBtn.disabled = inMatch;
+}
+
+/* ENTER */
+msg.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    if (!inMatch || lockedAfterLeave) return;
+    if (!msg.value.trim()) return;
+
+    socket.emit("message", msg.value);
+    msg.value = "";
+  }
+});
+
+/* FIND */
+function find() {
+  lockedAfterLeave = false;
+
+  status.innerText = "Szukam...";
+  status.style.background = "#374151";
+
+  loader.style.display = "block";
+
+  chat.innerHTML = "";
+  msg.disabled = true;
+
+  socket.emit("setProfile", {
+    gender: gender.value,
+    seeking: seeking.value
+  });
+
+  socket.emit("find");
+
+  updateButtons();
+}
+
+/* DISCONNECT */
+function disconnectChat() {
+  socket.emit("manual-disconnect");
+
+  inMatch = false;
+  loader.style.display = "none";
+
+  status.innerText = "Rozłączono";
+  status.style.background = "#ef4444";
+
+  chat.innerHTML = "";
+  msg.disabled = true;
+
+  updateButtons();
+}
+
+/* SKIP */
+function skipUser() {
+  if (!inMatch || lockedAfterLeave) return;
+
+  socket.emit("manual-disconnect");
+
+  chat.innerHTML = "";
+  loader.style.display = "block";
+
+  status.innerText = "Szukam nowej osoby...";
+  status.style.background = "#374151";
+
+  setTimeout(() => socket.emit("find"), 300);
+
+  updateButtons();
+}
+
+/* MATCH */
+socket.on("matched", () => {
+  loader.style.display = "none";
+
+  status.innerText = "Połączono!";
+  status.style.background = "#22c55e";
+
+  inMatch = true;
+  msg.disabled = false;
+
+  soundMatch.currentTime = 0;
+  soundMatch.play().catch(()=>{});
+
+  updateButtons();
+});
+
+/* MESSAGE */
+socket.on("message", (data) => {
+  const div = document.createElement("div");
+  div.classList.add("msg");
+  div.classList.add(data.sender === socket.id ? "me" : "other");
+
+  if (data.text.includes("giphy.com") || data.text.includes(".gif")) {
+  const img = document.createElement("img");
+  img.src = data.text;
+  img.style.maxWidth = "200px";
+  img.style.borderRadius = "10px";
+  div.appendChild(img);
+} else {
+  div.innerText = data.text;
+}
+
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+
+  soundMsg.currentTime = 0;
+  soundMsg.play().catch(()=>{});
+});
+
+/* TYPING */
+msg.addEventListener("input", () => {
+  if (!inMatch) return;
+  socket.emit("typing");
+});
+
+socket.on("typing", () => {
+  typingBar.innerText = "✍️ Nieznajomy pisze...";
+  setTimeout(() => typingBar.innerText = "", 1200);
+});
+
+/* PARTNER LEFT */
+socket.on("partner-left", () => {
+  if (lockedAfterLeave) return;
+
+  lockedAfterLeave = true;
+  inMatch = false;
+
+  loader.style.display = "none";
+  chat.innerHTML = "";
+
+  status.innerText = "Użytkownik się rozłączył";
+  status.style.background = "#ef4444";
+
+  msg.disabled = true;
+
+  updateButtons();
+});
+
+/* =========================
+   😄 EMOJI SYSTEM (LIGHT MESSENGER STYLE)
+========================= */
+
+const emojis = ["😀","😂","🤣","😍","😎","😭","😡","👍","🙏","🔥","💀","💬","❤️","😅","🤔","👀","💯"];
+
+function toggleEmoji() {
+gifSearch.style.display = "none";
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+
+  panel.innerHTML = "";
+
+  emojis.forEach(e => {
+    const span = document.createElement("span");
+    span.className = "emoji";
+    span.innerText = e;
+    span.onclick = () => {
+      msg.value += e;
+      msg.focus();
+    };
+    panel.appendChild(span);
+  });
+}
+
+/* =========================
+   🎬 GIPHY
+========================= */
+
+async function searchGIF() {
+  const q = gifSearch.value;
+  if (!q) return;
+
+  const res = await fetch(
+    `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_KEY}&q=${q}&limit=30`
+  );
+
+  const data = await res.json();
+
+  panel.innerHTML = "";
+
+data.data.forEach(gif => {
+  const img = document.createElement("img");
+
+  img.src = gif.images.fixed_width_small.url;
+  img.className = "gif";
+
+  img.onclick = () => {
+    socket.emit("message", gif.images.fixed_width_small.url);
+  };
+
+  panel.appendChild(img);
+});
+}
+
+function toggleGIF() {
+  const isOpen = gifSearch.style.display === "block";
+
+  if (isOpen) {
+    gifSearch.style.display = "none";
+    panel.innerHTML = "";
+    return;
+  }
+
+  gifSearch.style.display = "block";
+  panel.style.display = "grid";
+
+  // pokaż domyślne GIFy
+  loadTrendingGIF();
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    panel.innerHTML = "";
+    gifSearch.style.display = "none";
+  }
+});
+async function loadTrendingGIF() {
+  const res = await fetch(
+    `https://api.giphy.com/v1/gifs/trending?api_key=${GIPHY_KEY}&limit=30`
+  );
+
+  const data = await res.json();
+
+  panel.innerHTML = "";
+
+  data.data.forEach(gif => {
+    const img = document.createElement("img");
+
+    img.src = gif.images.fixed_width_small.url;
+    img.className = "gif";
+
+    img.onclick = () => {
+      socket.emit("message", gif.images.fixed_width_small.url);
+    };
+
+    panel.appendChild(img);
+  });
+}
+</script>
+
+</div>
+
+</body>
+</html>
